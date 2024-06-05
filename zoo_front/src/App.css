@@ -1,0 +1,8 @@
+@font-face {
+  font-family: Pompiere;
+  src: url('./fonts/Pompiere-Regular2.ttf');
+}
+body{
+  background: #292929;
+  /* font-family: Pompiere; */
+}

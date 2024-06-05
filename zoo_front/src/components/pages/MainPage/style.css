@@ -1,0 +1,140 @@
+.home__main {
+	/* background: url('../../../img/main_bg.png') 50% no-repeat; */
+	/* background-size: cover; */
+	/* background: rgb(247, 247, 247); */
+}
+
+.main_cont{
+	margin: 70px auto;
+	background: #ffffff;
+	width: 70%;
+	height: 40%;
+	padding: 5px;
+	border-radius: 10px;
+	  font-family: Pompiere;
+}
+
+.main_title{
+	margin: 0 auto;
+	display: block;
+	width: 70%;
+	text-align: left;
+	color: #49a1ff;
+	  font-family: Pompiere;
+}
+
+.main_subtitle{
+	margin: 0 auto;
+	margin-top: 10px;
+	display: block;
+	width: 70%;
+	text-align: left;
+	color: #ffffff;
+}
+
+.main_news{
+	color: #49a1ff;
+	  font-family: Pompiere;
+	text-align: center;
+}
+
+.main__head{
+	display: flex;
+	
+
+	margin-top: 70px;
+	justify-content: center;
+}
+
+.delimentr{
+	width: 50%;
+	background: #e6e6e6;
+}
+
+.slider{
+	width: 70%;
+	margin: 0 auto;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.btn_prev-next{
+	color: #49a1ff;
+	font-size: 77px;
+	cursor: pointer;
+	font-family: Pompiere;
+}
+
+.sl_img{
+	width: 100%;
+	
+}
+
+.main_slider{
+	display: flex;
+	flex-direction: row;
+	overflow-x: scroll;
+	gap: 15px;
+	padding-bottom: 10px;
+	background: #c8c7c7;
+	margin: 10px;
+	padding: 15px;
+}
+
+.main_slider::-webkit-scrollbar {
+	width: 12px;               /* ширина всей полосы прокрутки */
+  }
+  
+  .main_slider::-webkit-scrollbar-track {
+	background: rgb(255, 255, 255);        /* цвет зоны отслеживания */
+  }
+  
+  .main_slider::-webkit-scrollbar-thumb {
+	background-color: rgb(63, 63, 63);    /* цвет бегунка */
+	border-radius: 20px;       /* округлось бегунка */
+	border: 3px solid rgb(34, 34, 33);  /* отступ вокруг бегунка */
+  }
+
+
+.main_card{
+	background: #ffffff;
+	border-radius: 5px;
+	
+}
+.main_card__img{
+
+	width: 250px;
+	height: 250px;
+
+	object-fit: contain;
+	
+	display: block;
+	margin: 0 auto;
+}
+
+.main_actual_title{
+	text-align: center;
+	width: fit-content;
+	display: block;
+	margin: 0 auto;
+	padding-bottom: 5px;
+	border-bottom: 1px solid black;
+	margin-bottom: 15px;
+}
+
+.main_card__price{
+	font-size: 10px;
+	text-align: center;
+}
+
+.show_more{
+	padding: 8px;
+	border-radius: 10px;
+	background: #49a1ff;
+	width: fit-content;
+	display: block;
+	margin: 0 auto;
+	color: #ffffff;
+	cursor: pointer;
+}
