@@ -122,7 +122,7 @@ const ProfilePage = () => {
           )}
         </div>
       </main>
-      <Footer />
+
     </>
   );
 };

@@ -152,6 +152,11 @@ const Header = ({ handleChange, currentLocale }) => {
               <i className="cart__amount">{user?.userCart?.length}</i>
             </Link>
           ) : null}
+          {user ? (
+            <Link className="header__link cart__link" to="/saved">
+              Избранные
+            </Link>
+          ) : null}
         </div>
       </div>
     </header>

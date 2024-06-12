@@ -7,6 +7,8 @@ import "./style.css";
 import { API_URL, POPUP_OVERLAY_CLASSNAME } from "../../../constants";
 import Modal from "../../common/Modal";
 import axios from "axios";
+import Footer from "../../common/Footer/Footer";
+import Card from "./Card";
 
 const ClothesPage = () => {
   const [user, setUser] = useState();
@@ -26,8 +28,6 @@ const ClothesPage = () => {
     sex: [],
     type: [],
   });
-
-  console.log("filter: ", filter);
 
   const [cardPrice, setCardPrice] = useState(activeCard && activeCard?.price);
   const [cardName, setCardName] = useState(activeCard && activeCard?.name);
@@ -53,7 +53,8 @@ const ClothesPage = () => {
         .then((response) => {
           setCardData(response.data);
           setFilteredCards(response.data);
-        });
+        })
+        .catch(() => {});
     };
     getClothes();
   }, []);
@@ -96,9 +97,25 @@ const ClothesPage = () => {
 
     setFilteredCards(filterArray(cardData));
   };
-  console.log("cardData: ", cardData);
 
-  console.log("filteredCards: ", filteredCards);
+  const handleAddFavourite = (evt, goodsId) => {
+    evt.stopPropagation();
+    let idsDoods = JSON.parse(localStorage.getItem(user._id));
+    console.log("idsDoods: ", idsDoods);
+
+    if (idsDoods) {
+      if (!idsDoods?.includes(goodsId)) {
+        localStorage.setItem(user._id, JSON.stringify([...idsDoods, goodsId]));
+      } else {
+        localStorage.setItem(
+          user._id,
+          JSON.stringify(idsDoods.filter((item) => item != goodsId))
+        );
+      }
+    } else {
+      localStorage.setItem(user._id, JSON.stringify([goodsId]));
+    }
+  };
 
   return (
     <>
@@ -127,46 +144,22 @@ const ClothesPage = () => {
           <div className="clothes__content">
             {filteredCards &&
               filteredCards.map((item) => (
-                <div
-                  className="clothes__card"
-                  onClick={() => {
-                    setActiveCard(item);
-                    setCardPrice(item.price);
-                    setCardDesc(item.description);
-                    setCardName(item?.name);
-                    setShowCard(true);
-                  }}
-                >
-                  {user && user.isAdmin && (
-                    <span
-                      className="clothes_card--delete"
-                      onClick={async (event) => {
-                        event.stopPropagation();
-                        await axios.delete(`${API_URL}/team/${item._id}`, {
-                          withCredentials: true,
-                        });
-                      }}
-                    >
-                      &times;
-                    </span>
-                  )}
-                  <img
-                    className="clothes__img"
-                    src={`${API_URL}/getImage/${item.avatar}`}
-                    alt=""
-                  />
-                  <div className="clothes__bottom">
-                    <p className="clothes__price">
-                      Цена за шт: {item.price} BYN
-                    </p>
-                  </div>
-                </div>
+                <Card
+                  item={item}
+                  handleAddFavourite={handleAddFavourite}
+                  setActiveCard={setActiveCard}
+                  setCardDesc={setCardDesc}
+                  setCardName={setCardName}
+                  setCardPrice={setCardPrice}
+                  setShowCard={setShowCard}
+                  activeCard={activeCard}
+                  user={user}
+                />
               ))}
           </div>
         </div>
       </main>
 
-      {/* <Footer /> */}
       <Modal
         style={{
           with: !isFiltersModalOpen && "0",

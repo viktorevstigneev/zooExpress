@@ -2,6 +2,8 @@ import "./App.css";
 import React, { lazy, Suspense, useState } from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Header from "./components/common/Header";
+import Footer from "./components/common/Footer";
+import SavedPage from "./components/pages/SavedPage/SavedPage";
 
 const SignInPage = lazy(() => import("./components/pages/SignIn"));
 const SignUpPage = lazy(() => import("./components/pages/Signup"));
@@ -26,8 +28,10 @@ function App() {
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/saved" element={<SavedPage />} />
         </Routes>
         {/* <Navigate  to="/main" /> */}
+        <Footer />
       </Suspense>
     </BrowserRouter>
   );

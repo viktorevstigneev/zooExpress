@@ -34,7 +34,8 @@ const MainPage = () => {
         .get(`${API_URL}/team`, { withCredentials: true })
         .then((response) => {
           setCardData(response.data.slice(0, 5));
-        });
+        })
+        .catch(() => {});
     };
     getClothes();
   }, []);
@@ -125,7 +126,7 @@ const MainPage = () => {
           </div>
         </div>
       </main>
-      <Footer />
+
     </>
   );
 };

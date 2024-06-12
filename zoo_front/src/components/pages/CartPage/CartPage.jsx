@@ -21,6 +21,9 @@ const CartPage = () => {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
 
+  const [orderType, setOrderType] = useState("");
+  const [exressType, setExressType] = useState("");
+
   useEffect(() => {
     const getCurrentUser = async () => {
       const responseData = await axios
@@ -111,7 +114,7 @@ const CartPage = () => {
             <p className="cart__summary">Общая стоимость: {sum} BYN</p>
             {userCart?.length ? (
               <button className="cart__button" onClick={() => setPay(true)}>
-                перейти к оплате
+                оформить заказ
               </button>
             ) : null}
           </div>
@@ -120,124 +123,150 @@ const CartPage = () => {
 
       {pay && (
         <Modal
-          title={"Введите данные карты"}
+          title={"Оформление заказа"}
           onCloseButtonClick={handleModalWindowCloseButtonClick}
           onOverlayClick={handleModalWindowOverlayClick}
         >
-          <div className="pay__wrapper">
-            <Cards
-              number={number}
-              expiry={expiry}
-              cvc={cvc}
-              name={name}
-              focused={focus}
-            />
-            <form
-              className="par__form"
-              encType="multipart/form-data"
-              // method="POST"
-              onSubmit={async (evt) => {
-                evt.preventDefault();
-
-                const formData = new FormData(evt.target);
-
-                // formData.append('userID', user._id);
-
-                const responseData = await axios({
-                  method: "PATCH",
-                  url: `${API_URL}/profileAddOrder?userId=${user._id}`,
-                  data: formData,
-                  withCredentials: true,
-                });
-                window.location.reload();
-              }}
-            >
-              <input
-                className="pay__credit"
-                type="tel"
-                name="number"
-                placeholder="Card Number"
-                maxLength={16}
-                onChange={(e) => {
-                  const { name, value } = e.target;
-                  setNumber(value);
-                }}
-                onFocus={(e) => setFocus(e.target.name)}
+          <p className="pay_type">Выберите способ оплаты</p>
+          <select
+            className="pay_input"
+            value={orderType}
+            onChange={(evt) => setOrderType(evt.target.value)}
+          >
+            <option value="наличными">наличными</option>
+            <option value="картой на сайте">картой на сайте</option>
+          </select>
+          {orderType === "картой на сайте" ? (
+            <div className="pay__wrapper">
+              <Cards
+                number={number}
+                expiry={expiry}
+                cvc={cvc}
+                name={name}
+                focused={focus}
               />
+              <form
+                className="par__form"
+                encType="multipart/form-data"
+                // method="POST"
+                onSubmit={async (evt) => {
+                  evt.preventDefault();
 
-              <input
-                className="pay__credit"
-                type="tel"
-                name="name"
-                placeholder="Card name"
-                onChange={(e) => {
-                  const { name, value } = e.target;
-                  setName(value);
+                  const formData = new FormData(evt.target);
+
+                  // formData.append('userID', user._id);
+
+                  const responseData = await axios({
+                    method: "PATCH",
+                    url: `${API_URL}/profileAddOrder?userId=${user._id}`,
+                    data: formData,
+                    withCredentials: true,
+                  });
+                  window.location.reload();
                 }}
-                onFocus={(e) => setFocus(e.target.name)}
-              />
-
-              <div className="pay__wrapper-b">
+              >
                 <input
-                  className="pay__credit-b"
+                  className="pay__credit"
                   type="tel"
-                  name="expiry"
-                  placeholder="expiry"
-                  maxLength={4}
+                  name="number"
+                  placeholder="Card Number"
+                  maxLength={16}
                   onChange={(e) => {
-                    const { value } = e.target;
-                    setExpiry(value);
+                    const { name, value } = e.target;
+                    setNumber(value);
                   }}
                   onFocus={(e) => setFocus(e.target.name)}
                 />
 
                 <input
-                  className="pay__credit-b"
+                  className="pay__credit"
                   type="tel"
-                  name="cvc"
-                  placeholder="cvc"
-                  maxLength={3}
+                  name="name"
+                  placeholder="Card name"
                   onChange={(e) => {
-                    const { value } = e.target;
-                    setCvc(value);
+                    const { name, value } = e.target;
+                    setName(value);
                   }}
                   onFocus={(e) => setFocus(e.target.name)}
                 />
+
+                <div className="pay__wrapper-b">
+                  <input
+                    className="pay__credit-b"
+                    type="tel"
+                    name="expiry"
+                    placeholder="expiry"
+                    maxLength={4}
+                    onChange={(e) => {
+                      const { value } = e.target;
+                      setExpiry(value);
+                    }}
+                    onFocus={(e) => setFocus(e.target.name)}
+                  />
+
+                  <input
+                    className="pay__credit-b"
+                    type="tel"
+                    name="cvc"
+                    placeholder="cvc"
+                    maxLength={3}
+                    onChange={(e) => {
+                      const { value } = e.target;
+                      setCvc(value);
+                    }}
+                    onFocus={(e) => setFocus(e.target.name)}
+                  />
+                </div>
+                {/* <button className="pay__button">оплатить</button> */}
+              </form>
+            </div>
+          ) : null}
+
+          <p className="pay_type">Выберите способ доставки</p>
+          <select
+            className="pay_input"
+            value={exressType}
+            onChange={(evt) => setExressType(evt.target.value)}
+          >
+            <option value="самовывоз">самовывоз</option>
+            <option value="курьер">курьер</option>
+          </select>
+
+          {exressType === "курьер" ? (
+            <>
+              <p className="pay_type">Введите адресс</p>
+              <div style={{ display: "flex", flexWrap: "wrap" }}>
+                <label className="pay_label">Улица</label>
+                <input className="pay_input" />
+                <label className="pay_label">Номер дома</label>
+                <input className="pay_input" />
+                <label className="pay_label">Квартира</label>
+                <input className="pay_input" />
               </div>
-              <button className="pay__button">оплатить</button>
-            </form>
-          </div>
-          <p className="pay__info">
-            ¿ Оплата банковской картой VISA, MasterCard и БЕЛКАРТ через систему
-            Assist Belarus 1. Оплата производится через интернет в режиме
-            реального времени непосредственно после оформления заказа. 2. Для
-            совершения финансовой операции подходят карточки международных
-            платежных систем VISA (всех видов), MasterCard (в том числе
-            Maestro), эмитированные любым банком мира, а также карты платежной
-            системы БЕЛКАРТ. При выборе оплаты заказа с помощью банковской
-            карты, обработка платежа (включая ввод номера банковской карты)
-            производится ООО «Компанией электронных платежей «АССИСТ» с
-            использованием программно-аппаратного комплекса системы электронных
-            платежей Assist Belarus, которая прошла международную сертификацию.
-          </p>
-          <p className="pay__info">
-            ¿ настоятельно рекомендуем Вам проверить модель, характеристики,
-            комплектацию товара до подписания бланка доставки, претензии к
-            внешнему виду и комплектации изделия после подписания бланка
-            доставки и отъезда курьера не принимаются. - При авансовой оплате
-            заказа (по безналичному расчету, с помощью электронных платежных
-            систем и пр.) покупатель обязан предъявить удостоверяющий личность
-            документ, а также (если покупателем выступает юридическое лицо)
-            доверенность от организации-плательщика. - В обязанности курьеров не
-            входят консультации по эксплуатации товаров, услуг по их сборке,
-            установке и подключению. За консультациями просьба обращаться к
-            менеджерам call-центра. Обращаем ваше внимание, что включение
-            бытовых устройств при температуре, значительно ниже комнатной, может
-            негативно сказаться на их дальнейшей эксплуатации.
-          </p>
+            </>
+          ) : null}
+          <button
+            className="pay__button"
+            onClick={async (evt) => {
+              evt.preventDefault();
+
+              const formData = new FormData(evt.target);
+
+              // formData.append('userID', user._id);
+
+              const responseData = await axios({
+                method: "PATCH",
+                url: `${API_URL}/profileAddOrder?userId=${user._id}`,
+                data: formData,
+                withCredentials: true,
+              });
+              window.location.reload();
+            }}
+          >
+            Оформить заказ
+          </button>
         </Modal>
       )}
-      <Footer />
     </>
   );
 };
