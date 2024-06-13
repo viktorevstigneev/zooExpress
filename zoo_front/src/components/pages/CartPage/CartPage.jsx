@@ -237,14 +237,28 @@ const CartPage = () => {
               <p className="pay_type">Введите адресс</p>
               <div style={{ display: "flex", flexWrap: "wrap" }}>
                 <label className="pay_label">Улица</label>
-                <input className="pay_input" />
+                <input
+                  className="pay_input"
+                  placeholder="например ул.Горького"
+                />
                 <label className="pay_label">Номер дома</label>
-                <input className="pay_input" />
+                <input className="pay_input" placeholder="например д.85" />
                 <label className="pay_label">Квартира</label>
-                <input className="pay_input" />
+                <input className="pay_input" placeholder="например кв.12" />
               </div>
             </>
           ) : null}
+          <p className="pay_type">Введите данные получателя</p>
+          <label className="pay_label">ФИО</label>
+          <input className="pay_input" placeholder="Иванов Иван Иванович" />
+          <label className="pay_label">Номер телефона</label>
+          <input className="pay_input" placeholder="+375(33)456-23-31" />
+          <label className="pay_label">Почта</label>
+          <input
+            className="pay_input"
+            placeholder="myEmail@gmail.com"
+            type="email"
+          />
           <button
             className="pay__button"
             onClick={async (evt) => {

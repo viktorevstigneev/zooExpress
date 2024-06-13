@@ -15,7 +15,7 @@ const AdminPanel = () => {
 
   return (
     <section className="admin">
-      <h1 className="admin__title">Добавте новый товар здесь</h1>
+      <h1 className="admin__title">Добавьте новый товар здесь</h1>
       <form
         className="admin__person"
         encType="multipart/form-data"
